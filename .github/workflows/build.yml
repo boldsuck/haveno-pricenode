@@ -1,8 +1,11 @@
 name: CI
 
 on:
+  workflow_dispatch:
   push:
+    branches: [ main ]
   pull_request:
+    branches: [ main ]
     paths-ignore:
       - '**/README.md'
 
@@ -11,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -23,3 +26,8 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew clean build --stacktrace --scan
+    - name: save pricenode JARs
+      uses: actions/upload-artifact@v4
+      with:
+        name: haveno-pricenode.zip
+        path: build/distributions/haveno-pricenode-0.7.2-SNAPSHOT.zip
