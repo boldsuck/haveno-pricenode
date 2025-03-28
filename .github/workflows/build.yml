@@ -29,5 +29,5 @@ jobs:
     - name: save pricenode JARs
       uses: actions/upload-artifact@v4
       with:
-        name: haveno-pricenode.zip
-        path: build/distributions/haveno-pricenode-0.7.2-SNAPSHOT.zip
+        name: haveno-pricenode-tar
+        path: build/distributions/haveno-pricenode-0.7.2-SNAPSHOT.tar
