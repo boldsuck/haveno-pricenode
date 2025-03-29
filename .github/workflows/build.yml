@@ -31,3 +31,8 @@ jobs:
       with:
         name: haveno-pricenode.zip
         path: build/distributions/haveno-pricenode-0.7.2-SNAPSHOT.zip
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: build/distributions/haveno-pricenode-0.7.2-SNAPSHOT.zip
