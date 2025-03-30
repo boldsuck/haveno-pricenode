@@ -1,0 +1,34 @@
+name: Main
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'adopt'
+        java-version: '21'
+
+    - name: Build with Gradle
+      run: ./gradlew clean build --stacktrace --scan
+    - name: save pricenode JARs
+      uses: actions/upload-artifact@v4
+      with:
+        name: haveno-pricenode.zip
+        path: build/distributions/haveno-pricenode-0.7.2-SNAPSHOT.zip
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: build/distributions/haveno-pricenode-0.7.2-SNAPSHOT.zip
